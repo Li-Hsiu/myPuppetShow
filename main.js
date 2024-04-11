@@ -136,7 +136,6 @@ function createCastle () {
     scene.add(castle)
   })
 }
-
 const raycaster = new THREE.Raycaster(); // create once
 const clickMouse = new THREE.Vector2();  // create once
 const moveMouse = new THREE.Vector2();   // create once
@@ -147,7 +146,8 @@ function intersect(pos) {
   return raycaster.intersectObjects(scene.children);
 }
 
-window.addEventListener('click', event => {
+function onTouchStart(event) {
+  event.preventDefault();
   if (draggable != null) {
     console.log(`dropping draggable ${draggable.userData.name}`)
     draggable = null;
@@ -155,8 +155,8 @@ window.addEventListener('click', event => {
   }
 
   // THREE RAYCASTER
-  clickMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  clickMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  clickMouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+  clickMouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
 
   const found = intersect(clickMouse);
   if (found.length > 0) {
@@ -165,12 +165,16 @@ window.addEventListener('click', event => {
       console.log(`found draggable ${draggable.userData.name}`)
     }
   }
-})
+}
 
-window.addEventListener('mousemove', event => {
-  moveMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  moveMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-});
+function onTouchMove(event) {
+  event.preventDefault();
+  moveMouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+  moveMouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
+}
+
+window.addEventListener('touchstart', onTouchStart, false);
+window.addEventListener('touchmove', onTouchMove, false);
 
 function dragObject() {
   if (draggable != null) {
@@ -179,7 +183,7 @@ function dragObject() {
       for (let i = 0; i < found.length; i++) {
         if (!found[i].object.userData.ground)
           continue
-        
+
         let target = found[i].point;
         draggable.position.x = target.x
         draggable.position.z = target.z
@@ -187,7 +191,6 @@ function dragObject() {
     }
   }
 }
-
 
 createFloor()
 createBox()
