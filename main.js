@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { DragControls } from 'three/addons/controls/DragControls.js';
 
-var scene, camera, renderer, ambientLight, directionalLight, objects, oControls, dControls;
+var scene, camera, renderer, ambientLight, directionalLight, objects, oControls, dControls, plane, intersects, raycaster, touch;
 
 function init() {
   // camera
@@ -46,12 +46,41 @@ function init() {
 
   // resize
   window.addEventListener('resize', onWindowResize);
+  //window.addEventListener( 'mousemove', onMouseMove, false );
+  window.addEventListener('touchmove', onTouchMove, false);
+
+  plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+  raycaster = new THREE.Raycaster();
+  intersects = new THREE.Vector3();
 
   // orbit control
-  //oControls = new OrbitControls(camera, renderer.domElement);
+  oControls = new OrbitControls(camera, renderer.domElement);
+  oControls.maxDistance = 300;
+  oControls.minDistance = 50;
+  oControls.maxPolarAngle = Math.PI/2;
 
-  // drag control
-  dControls = new DragControls(objects, camera, renderer.domElement);
+  touch = new THREE.Vector2();
+
+  function onTouchMove(e) { 
+    e.preventDefault(); 
+    touch.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1; 
+    touch.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1; 
+  }
+
+  // drag control 
+  dControls = new DragControls(objects, camera, renderer.domElement); 
+  dControls.addEventListener('dragstart', function (event) { 
+    oControls.enabled = false; 
+  }); 
+  dControls.addEventListener('dragend', function (event) { 
+    oControls.enabled = true; 
+  }); 
+  dControls.addEventListener('drag', function (event) { 
+    raycaster.setFromCamera(touch, camera); 
+    raycaster.ray.intersectPlane(plane, intersects); 
+    event.object.position.set(intersects.x, intersects.y + event.object.scale.y / 2, intersects.z); 
+  });
+
 }
 
 function onWindowResize() {
