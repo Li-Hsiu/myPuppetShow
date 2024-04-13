@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { DragControls } from 'three/addons/controls/DragControls.js';
 
-function initControl(objects, camera, renderer, center, scale) {
+function initControl(objects, camera, renderer, center, scale, scene) {
     const detectDeviceType = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile':'Desktop';
     const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
     const raycaster = new THREE.Raycaster();
@@ -15,6 +15,7 @@ function initControl(objects, camera, renderer, center, scale) {
     oControls.target = center;
     oControls.update();
 
+    console.log(detectDeviceType());
     if (detectDeviceType() == 'Mobile') {
         var seat = new THREE.Mesh(new THREE.BoxBufferGeometry(), new THREE.MeshPhongMaterial({ color: 0xFFFFFF }));
         seat.position.set(0,0,0);

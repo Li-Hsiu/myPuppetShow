@@ -29,9 +29,7 @@ function init() {
   var floor = createFloor(scene, stageCenter, stageScale);
   var box = createBox(scene, objects);
 
-  
-
-  initControl(objects, camera, renderer, stageCenter, stageScale);
+  initControl(objects, camera, renderer, stageCenter, stageScale, scene);
 
   window.addEventListener('resize', onWindowResize);
 
