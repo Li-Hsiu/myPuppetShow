@@ -29,9 +29,7 @@ function init() {
   var floor = createFloor(scene, stageCenter, stageScale);
   var box = createBox(scene, objects);
 
-  var seat = new THREE.Mesh(new THREE.BoxBufferGeometry(), new THREE.MeshPhongMaterial({ color: 0xFFFFFF }));
-  seat.position.set(0,0,0);
-  scene.add(seat);
+  
 
   initControl(objects, camera, renderer, stageCenter, stageScale);
 
@@ -47,8 +45,15 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+var vrInit = false;
 function animate() {
-  renderer.setAnimationLoop( function () { renderer.render( scene, camera ); } );
+  
+  renderer.setAnimationLoop( function () { 
+    if (renderer.xr.isPresenting && vrInit == false) {
+      vrInit = true;
+    }
+    renderer.render( scene, camera ); 
+  } );
 }
 
 init();

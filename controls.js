@@ -16,6 +16,10 @@ function initControl(objects, camera, renderer, center, scale) {
     oControls.update();
 
     if (detectDeviceType() == 'Mobile') {
+        var seat = new THREE.Mesh(new THREE.BoxBufferGeometry(), new THREE.MeshPhongMaterial({ color: 0xFFFFFF }));
+        seat.position.set(0,0,0);
+        scene.add(seat);
+
         const touch = new THREE.Vector2(); 
         window.addEventListener('touchmove', onTouchMove, false);
 
@@ -45,6 +49,10 @@ function initControl(objects, camera, renderer, center, scale) {
         });
     }
     else {
+        var seat = new THREE.Mesh(new THREE.BoxBufferGeometry(), new THREE.MeshPhongMaterial({ color: 0x0000FF }));
+        seat.position.set(0,0,0);
+        scene.add(seat);
+
         const mouse = new THREE.Vector2(); 
         window.addEventListener( 'mousemove', onMouseMove, false );
 
