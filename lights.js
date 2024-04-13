@@ -6,7 +6,7 @@ function createLight(scene) {
 
     // directional light
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(-30, 50, -30);
+    directionalLight.position.set(0, 80, 70);
     directionalLight.castShadow = true;
     directionalLight.shadow.mapSize.width = 2048;
     directionalLight.shadow.mapSize.height = 2048;

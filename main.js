@@ -7,11 +7,11 @@ import { VRButton } from 'three/addons/webxr/VRButton.js';
 var scene, camera, renderer, objects;
 
 function init() {
-  const stageCenter = new THREE.Vector3(0,0,70);
+  const stageCenter = new THREE.Vector3(0,0,-70);
   const stageScale = new THREE.Vector3(100,2,70);
 
   camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 1500);
-  camera.position.set(70,70,-70);
+  camera.position.set(-70,70,70);
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
