@@ -17,9 +17,9 @@ function initControl(objects, camera, renderer, center, scale, scene) {
 
     console.log(detectDeviceType());
     if (detectDeviceType() == 'Mobile') {
-        var seat = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({ color: 0xFFFFFF }));
-        seat.position.set(0,-1,0);
-        scene.add(seat);
+        //var seat = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({ color: 0xFFFFFF }));
+        //seat.position.set(0,-1,0);
+        //scene.add(seat);
 
         const touch = new THREE.Vector2(); 
         window.addEventListener('touchmove', onTouchMove, false);
