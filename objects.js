@@ -25,7 +25,7 @@ function createBox(scene, objects, texture, empty, x, z) {
     const newMat = new THREE.MeshPhongMaterial({ map: texture, transparent:true, side:THREE.FrontSide});
     const matsArr = [empty, empty, empty, empty, empty, newMat];
 
-    let box = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({ color: 0x00143C })); //new THREE.MeshPhongMaterial({ color: 0xDC143C })
+    let box = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({ color: 0xFFFFFF })); //new THREE.MeshPhongMaterial({ color: 0xDC143C })
     box.position.set(pos.x, pos.y, pos.z);
     box.scale.set(scale.x, scale.y, scale.z);
     box.userData.draggable = true
