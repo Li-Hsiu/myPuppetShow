@@ -18,7 +18,7 @@ function initControl(objects, camera, renderer, center, scale, scene) {
     console.log(detectDeviceType());
     if (detectDeviceType() == 'Mobile') {
         var seat = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({ color: 0xFFFFFF }));
-        seat.position.set(0,0,0);
+        seat.position.set(0,-1,0);
         scene.add(seat);
 
         const touch = new THREE.Vector2(); 
@@ -41,17 +41,17 @@ function initControl(objects, camera, renderer, center, scale, scene) {
             raycaster.setFromCamera(touch, camera); 
             raycaster.ray.intersectPlane(plane, intersects); 
             event.object.position.set(intersects.x, intersects.y + event.object.scale.y / 2, intersects.z); 
-            if (intersects.x > center.x+scale.x/2-5) event.object.position.set(center.x+scale.x/2-5, intersects.y + event.object.scale.y / 2, event.object.position.z);
-            else if (intersects.x < center.x-scale.x/2+5) event.object.position.set(center.x-scale.x/2+5, intersects.y + event.object.scale.y / 2, event.object.position.z);
-            if (intersects.z > center.z+scale.z/2-5) event.object.position.set(event.object.position.x, intersects.y + event.object.scale.y / 2, center.z+scale.z/2-5);
-            else if (intersects.z < center.z-scale.z/2+5) event.object.position.set(event.object.position.x, intersects.y + event.object.scale.y / 2, center.z-scale.z/2+5);
+            if (intersects.x > center.x+scale.x/2-event.object.scale.x/2) event.object.position.set(center.x+scale.x/2-event.object.scale.x/2, intersects.y + event.object.scale.y / 2, event.object.position.z);
+            else if (intersects.x < center.x-scale.x/2+event.object.scale.x/2) event.object.position.set(center.x-scale.x/2+event.object.scale.x/2, intersects.y + event.object.scale.y / 2, event.object.position.z);
+            if (intersects.z > center.z+scale.z/2-event.object.scale.x/4-2) event.object.position.set(event.object.position.x, intersects.y + event.object.scale.y / 2, center.z+scale.z/2-event.object.scale.x/4-2);
+            else if (intersects.z < center.z-scale.z/2+event.object.scale.x/4+2) event.object.position.set(event.object.position.x, intersects.y + event.object.scale.y / 2, center.z-scale.z/2+event.object.scale.x/4+2);
             var direction = new THREE.Vector3(0, 0, 0).sub(event.object.position).normalize();
             event.object.rotation.y = Math.atan2(-direction.x, -direction.z);
         });
     }
     else {
         var seat = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({ color: 0x0000FF }));
-        seat.position.set(0,0,0);
+        seat.position.set(0,-1,0);
         scene.add(seat);
 
         const mouse = new THREE.Vector2(); 
@@ -73,10 +73,10 @@ function initControl(objects, camera, renderer, center, scale, scene) {
             raycaster.setFromCamera(mouse, camera); 
             raycaster.ray.intersectPlane(plane, intersects); 
             event.object.position.set(intersects.x, intersects.y + event.object.scale.y / 2, intersects.z); 
-            if (intersects.x > center.x+scale.x/2-5) event.object.position.set(center.x+scale.x/2-5, intersects.y + event.object.scale.y / 2, event.object.position.z);
-            else if (intersects.x < center.x-scale.x/2+5) event.object.position.set(center.x-scale.x/2+5, intersects.y + event.object.scale.y / 2, event.object.position.z);
-            if (intersects.z > center.z+scale.z/2-5) event.object.position.set(event.object.position.x, intersects.y + event.object.scale.y / 2, center.z+scale.z/2-5);
-            else if (intersects.z < center.z-scale.z/2+5) event.object.position.set(event.object.position.x, intersects.y + event.object.scale.y / 2, center.z-scale.z/2+5);
+            if (intersects.x > center.x+scale.x/2-event.object.scale.x/2) event.object.position.set(center.x+scale.x/2-event.object.scale.x/2, intersects.y + event.object.scale.y / 2, event.object.position.z);
+            else if (intersects.x < center.x-scale.x/2+event.object.scale.x/2) event.object.position.set(center.x-scale.x/2+event.object.scale.x/2, intersects.y + event.object.scale.y / 2, event.object.position.z);
+            if (intersects.z > center.z+scale.z/2-event.object.scale.x/4-2) event.object.position.set(event.object.position.x, intersects.y + event.object.scale.y / 2, center.z+scale.z/2-event.object.scale.x/4-2);
+            else if (intersects.z < center.z-scale.z/2+event.object.scale.x/4+2) event.object.position.set(event.object.position.x, intersects.y + event.object.scale.y / 2, center.z-scale.z/2+event.object.scale.x/4+2);
             var direction = new THREE.Vector3(0, 0, 0).sub(event.object.position).normalize();
             event.object.rotation.y = Math.atan2(-direction.x, -direction.z);
         });

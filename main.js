@@ -4,7 +4,7 @@ import { createLight } from './lights.js';
 import { initControl } from './controls.js';
 import { VRButton } from 'three/addons/webxr/VRButton.js';
 
-var scene, camera, renderer, objects;
+var scene, camera, renderer, objects, texture;
 
 function init() {
   const stageCenter = new THREE.Vector3(0,0,-70);
@@ -27,8 +27,12 @@ function init() {
 
   objects = [];
 
-  var floor = createFloor(scene, stageCenter, stageScale);
-  var box = createBox(scene, objects);
+  texture = new THREE.TextureLoader().load("assets/test.png");
+  const emptyTex = new THREE.TextureLoader().load("assets/empty.png");
+
+  createFloor(scene, stageCenter, stageScale);
+  createBox(scene, objects, texture, emptyTex, 15, -70);
+  createBox(scene, objects, texture, emptyTex, -10, -60);
 
   initControl(objects, camera, renderer, stageCenter, stageScale, scene);
 
@@ -51,6 +55,7 @@ function animate() {
     if (renderer.xr.isPresenting && vrInit == false) {
       vrInit = true;
     }
+
     renderer.render( scene, camera ); 
   } );
 }

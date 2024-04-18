@@ -17,16 +17,20 @@ function createFloor(scene, center, size) {
     return blockPlane;
 }
 
-function createBox(scene, objects) {
-    let scale = { x: 6, y: 6, z: 1 };
-    let pos = { x: 15, y: scale.y / 2, z: -70 };
+function createBox(scene, objects, texture, empty, x, z) {
+    let scale = { x: 12, y: 12, z: 1 };
+    let pos = { x: x, y: scale.y / 2, z: z };
 
-    let box = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({ color: 0xDC143C }));
+    
+    const newMat = new THREE.MeshPhongMaterial({ map: texture, transparent:true, side:THREE.FrontSide});
+    const matsArr = [empty, empty, empty, empty, empty, newMat];
+
+    let box = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({ color: 0xDC143C })); //new THREE.MeshPhongMaterial({ color: 0xDC143C })
     box.position.set(pos.x, pos.y, pos.z);
     box.scale.set(scale.x, scale.y, scale.z);
-    box.castShadow = true;
-    box.receiveShadow = true;
     box.userData.draggable = true
+    var direction = new THREE.Vector3(0, 0, 0).sub(box.position).normalize();
+    box.rotation.y = Math.atan2(-direction.x, -direction.z);
     scene.add(box);
     objects.push(box);
     return box;
