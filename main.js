@@ -23,6 +23,10 @@ function init() {
     isGliding = true;
     
   });
+  const buttonReset = document.getElementById('button3');
+  buttonReset.addEventListener('click', () => {
+    location.reload();
+  });
 
   camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 1500);
   camera.position.set(-70,70,70);
