@@ -13,7 +13,7 @@ function initControl(objects, camera, renderer, center, scale, stageScale) {
     oControls.maxDistance = 300;
     oControls.minDistance = 50;
     oControls.maxPolarAngle = Math.PI/2;
-    oControls.target = center;
+    oControls.target = new THREE.Vector3(center.x,center.y+15,center.z);
     oControls.update();
 
     var dControls;
