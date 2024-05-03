@@ -25,7 +25,7 @@ function init() {
   });
   const buttonReset = document.getElementById('button3');
   buttonReset.addEventListener('click', () => {
-    location.reload();
+    window.location.href = window.location.href;
   });
 
   camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 1500);
