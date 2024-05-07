@@ -37,6 +37,15 @@
 			background-color: rgba(255, 255, 255, 0.4);
 			color: rgba(255, 255, 255, 0.8);
 		}
+		.label {
+			position: absolute;
+			top: 20px;
+			right: 5px;
+			color: #fff;
+			padding: 20px 40px;
+			font-family: Arial, sans-serif;
+			font-size: 40px;
+		}
 	</style>
 	<script type="importmap">
 		{
@@ -50,6 +59,9 @@
 <title>My Puppet Show</title>
 
 <body>
+	<header>
+		<div class="label">li-hsiu.github.io/myPuppetShow</div>
+	</header>
 	<script type="module" src="main.js"></script>
 	<div id="container">
 		<div id="ui-container">
@@ -57,7 +69,7 @@
 		  <button id="button2">Start Viewing</button>
 		  <button id="button3">Reset Everything</button>
 		</div>
-	  </div>
+	</div>
 </body>
 
 </html>

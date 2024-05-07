@@ -76,8 +76,8 @@ function init() {
   createBox(scene, objects, "cowboy", emptyTex, -70, -130, 1, 20, 25);
   createBox(scene, objects, "farmer", emptyTex, -70, -120, 1, 20, 22);
   createBox(scene, objects, "butcher", emptyTex, -70, -110, 1, 18, 22);
-  createBox(scene, objects, "cameraMan", emptyTex, -70, -100, 1, 15, 20);
-  createBox(scene, objects, "child", emptyTex, -70, -90, 1, 10, 15);
+  createBox(scene, objects, "cameraMan", emptyTex, -70, -100, 1, 15, 22);
+  createBox(scene, objects, "child", emptyTex, -70, -90, 1, 8, 15);
 
   [oControls, dControls] = initControl(objects, camera, renderer, stageCenter, playgroundScale, stageScale);
 
