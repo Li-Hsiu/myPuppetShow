@@ -105,7 +105,7 @@ function cameraGlide(camera, center, oControls, dControls, isGliding, isViewing,
     return [true, false];
 }
 
-function changeBackground(backWall, isChanging, isUp) {
+function changeBackground(backWall, isChanging, isUp, floor) {
     if (!isChanging) return [false, isUp];
     if (isUp) {
         backWall.position.y += 1;
@@ -125,6 +125,13 @@ function changeBackground(backWall, isChanging, isUp) {
         backWall.position.y -= 1;
         if (backWall.position.y <= 26) {
             backWall.position.y = 26;
+            var idx = floor.userData.idx + 1;
+            floor.userData.idx += 1;
+            if (idx >= floor.userData.num) {
+                idx = 0;
+                floor.userData.idx = 0;
+            }
+            floor.material.map = floor.userData.textures[idx];
             return [false, true];
         }
         return [true, false];

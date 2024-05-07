@@ -2,20 +2,23 @@ import * as THREE from 'three'
 import { loadObjectTexture } from './texture.js';
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 
-function createFloor(scene, center, size) {
+function createFloor(scene, center, size, num) {
     let pos = center;
     pos.y -= 1;
     let scale = size;
 
-    const texture = new THREE.TextureLoader().load('./assets/stageFloor.jpg');
-
-    let blockPlane = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({ map:texture }));
+    var textures = loadObjectTexture("floor", num);
+    let blockPlane = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({map:textures[0]}));
     blockPlane.position.set(pos.x, pos.y, pos.z);
     blockPlane.scale.set(scale.x, scale.y, scale.z);
     blockPlane.castShadow = true;
     blockPlane.receiveShadow = true;
     blockPlane.userData.ground = true;
+    blockPlane.userData.textures = textures;
+    blockPlane.userData.num = num;
+    blockPlane.userData.idx = 0;
     scene.add(blockPlane);
+
     return blockPlane;
 }
 
@@ -24,7 +27,8 @@ function createGreenFloor(scene, center, size, tempObjects) {
     pos.y -= 0.1;
     let scale = size;
 
-    let blockPlane = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({ color: 0x00B140 }));
+    var texture = new THREE.TextureLoader().load("./assets/stageFloor.jpg");
+    let blockPlane = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({map:texture}));
     blockPlane.position.set(pos.x, pos.y, pos.z);
     blockPlane.scale.set(scale.x, scale.y, scale.z);
     blockPlane.castShadow = true;
@@ -39,7 +43,6 @@ function createBackWall(scene, num) {
     let pos = new THREE.Vector3(0,26,-95);
     let scale = new THREE.Vector3(100,54,1);
 
-    //const texture = new THREE.TextureLoader().load('./assets/background/classroom.jpg');
     var textures = loadObjectTexture("background", num);
     let backWall = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshPhongMaterial({map:textures[0]}));
     backWall.position.set(pos.x, pos.y, pos.z);
@@ -77,8 +80,8 @@ function createSpotlight(scene, objList) {
     });
 }
 
-function createBox(scene, objects, name, empty, x, z, frames) {
-    let scale = { x: 12, y: 12, z: 1 };
+function createBox(scene, objects, name, empty, x, z, frames, sizeX, sizeY) {
+    let scale = { x: sizeX, y: sizeY, z: 1 };
     let pos = { x: x, y: scale.y / 2, z: z };
 
     const loader = new THREE.TextureLoader();
@@ -104,7 +107,8 @@ function createBox(scene, objects, name, empty, x, z, frames) {
     box.userData.coverMatsArr = coverMatsArr;
     box.userData.matsArr = matsArr;
     box.userData.index = -1;
-    box.userData.onStage = true;
+    box.userData.onStage = false;
+    box.userData.init = false;
 
     scene.add(box);
     objects.push(box);

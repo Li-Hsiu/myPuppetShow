@@ -4,7 +4,7 @@ import { createLight } from './lights.js';
 import { initControl, cameraGlide, changeBackground } from './controls.js';
 import { changeTextures } from './texture.js';
 
-var scene, camera, renderer, objects, tempObjects, group, standingCamera, backWall, oControls, dControls, isGliding, isViewing, isChanging, isUp;
+var scene, camera, renderer, objects, tempObjects, group, floor, backWall, oControls, dControls, isGliding, isViewing, isChanging, isUp;
 
 function init() {
   const stageCenter = new THREE.Vector3(0,0,-70);
@@ -51,18 +51,34 @@ function init() {
   const emptyTex = new THREE.TextureLoader().load("assets/empty.png");
 
   tempObjects = [];
-  createFloor(scene, stageCenter, stageScale);
+  floor = createFloor(scene, stageCenter, stageScale, 4);
+  backWall = createBackWall(scene, 4);
   createGreenFloor(scene, stageCenter, playgroundScale, tempObjects);
-  backWall = createBackWall(scene, 2);
   createStandingCamera(scene, tempObjects);
   createSpotlight(scene, tempObjects);
 
   objects = [];
-  createBox(scene, objects, "motion", emptyTex, -15, -50, 10);
-  createBox(scene, objects, "motion", emptyTex, 10, -60, 10);
-  createBox(scene, objects, "motion", emptyTex, 20, -80, 10);
-  createBox(scene, objects, "motion", emptyTex, -30, -70, 10);
+  createBox(scene, objects, "cowFight", emptyTex, 0, -100, 43, 36, 20);
+  createBox(scene, objects, "cowLook", emptyTex, 0, -110, 31, 36, 20);
+  createBox(scene, objects, "cowEat", emptyTex, 0, -120, 43, 36, 20);
+  createBox(scene, objects, "cowDance", emptyTex, 0, -130, 28, 36, 20);
+  createBox(scene, objects, "cowSleep", emptyTex, -0, -140, 1, 36, 20);
   
+  createBox(scene, objects, "house", emptyTex, 70, -140, 1, 40, 40);
+  createBox(scene, objects, "tree", emptyTex, 70, -130, 1, 40, 40);
+  createBox(scene, objects, "sign", emptyTex, 70, -120, 1, 20, 30);
+  createBox(scene, objects, "plough", emptyTex, 70, -110, 1, 30, 20);
+  createBox(scene, objects, "fence", emptyTex, 70, -100, 1, 20, 20);
+  createBox(scene, objects, "milk", emptyTex, 70, -90, 1, 15, 15);
+  createBox(scene, objects, "shoe", emptyTex, 70, -80, 1, 10, 10);
+
+  createBox(scene, objects, "bullfighter", emptyTex, -70, -140, 1, 20, 25);
+  createBox(scene, objects, "cowboy", emptyTex, -70, -130, 1, 20, 25);
+  createBox(scene, objects, "farmer", emptyTex, -70, -120, 1, 20, 22);
+  createBox(scene, objects, "butcher", emptyTex, -70, -110, 1, 18, 22);
+  createBox(scene, objects, "cameraMan", emptyTex, -70, -100, 1, 15, 20);
+  createBox(scene, objects, "child", emptyTex, -70, -90, 1, 10, 15);
+
   [oControls, dControls] = initControl(objects, camera, renderer, stageCenter, playgroundScale, stageScale);
 
   window.addEventListener('resize', onWindowResize);
@@ -88,7 +104,7 @@ function animate() {
       changeTextures(objects,125);
     }
     [isGliding,isViewing] = cameraGlide(camera, new THREE.Vector3(0,0,-70), oControls, dControls, isGliding, isViewing, renderer);
-    [isChanging, isUp] = changeBackground(backWall, isChanging, isUp);
+    [isChanging, isUp] = changeBackground(backWall, isChanging, isUp, floor);
     renderer.render(scene, camera); 
   } );
 }
